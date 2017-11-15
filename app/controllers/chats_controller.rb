@@ -20,7 +20,7 @@ class ChatsController < ApplicationController
     # id is actually uuid
     @chat = Chat.find_by(uuid: params[:id])
     @chat_props = {
-      chat: @chat,
+      chatData: @chat,
       messages: @chat.messages.order(created_at: :desc)
     }
   end

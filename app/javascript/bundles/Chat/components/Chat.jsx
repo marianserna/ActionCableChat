@@ -1,26 +1,44 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import { Provider } from 'mobx-react';
+
+import ChatStore from '../stores/ChatStore';
+import Messages from './Messages';
+import WriteMessage from './WriteMessage';
+
 export default class Chat extends React.Component {
-  static propTypes = {};
+  static propTypes = {
+    chatData: PropTypes.object.isRequired,
+    messages: PropTypes.array.isRequired
+  };
 
   /**
    * @param props - Comes from your rails view.
    */
   constructor(props) {
     super(props);
-    this.state = {};
   }
 
-  updateName = (name) => {
+  updateName = name => {
     this.setState({ name });
   };
 
   render() {
     return (
-      <div>
-        <p>Chatting</p>
-      </div>
+      <Provider ChatStore={ChatStore}>
+        <div>
+          <input
+            type="text"
+            placeholder="Enter your Name"
+            onChange={e => {
+              ChatStore.userName = e.target.value;
+            }}
+          />
+          <Messages />
+          <WriteMessage />
+        </div>
+      </Provider>
     );
   }
 }
