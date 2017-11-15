@@ -18,6 +18,8 @@ export default class Chat extends React.Component {
    */
   constructor(props) {
     super(props);
+
+    ChatStore.setupSubscription(props.chatData.uuid);
   }
 
   updateName = name => {
