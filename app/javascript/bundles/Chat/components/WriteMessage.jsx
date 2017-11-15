@@ -10,6 +10,7 @@ export default class WriteMessage extends React.Component {
     e.preventDefault();
     // pass content in textarea to sendMessage function
     this.props.ChatStore.sendMessage(this.content.value);
+    e.target.reset();
   };
 
   render() {

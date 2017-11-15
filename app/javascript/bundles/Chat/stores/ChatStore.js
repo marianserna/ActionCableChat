@@ -13,20 +13,26 @@ class ChatStore {
 
   @action
   setupSubscription = chat_uuid => {
-    this.cable.subscriptions.create(
+    this.subscription = this.cable.subscriptions.create(
       {
         channel: 'ChatMessagesChannel', // ChatMessagesChannel lines up with the class created in rails
         chat_uuid
       },
       {
-        received: data => {
-          console.log(data);
+        received: message => {
+          this.messages.push(message);
         }
       }
     );
   };
 
-  @action sendMessage = text => {};
+  @action
+  sendMessage = text => {
+    this.subscription.send({
+      content: text,
+      user_name: this.userName
+    });
+  };
 }
 
 const singleton = new ChatStore();
